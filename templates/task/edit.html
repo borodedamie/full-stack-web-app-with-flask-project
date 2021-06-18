@@ -1,0 +1,17 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+    <h1>Edit todo</h1>
+    <p>{{ message }}</p>
+    <div>
+
+        <form action="/update" method="POST">
+            <input type="text" placeholder="" name="title" value="{{ task.title }}">
+            <input type="text" name="description" id="" placeholder="" value="{{ task.description }}">
+            <button type="submit">Update</button>
+        </form>
+
+
+    </div>
+{% endblock content %}
+

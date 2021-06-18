@@ -1,0 +1,40 @@
+{% extends "layout/base.html" %} 
+
+{% block content %} 
+    <div style="text-align: center;font-size: 30px;color:#af6920;">
+        <p>Todo List</p>
+    </div>
+    <div>
+        <a href="/create">Create to do...</a>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div id="task">
+       
+        <!-- <table BORDER="1" width=50% cellspacing="0" > -->
+        <table>
+            <thead>
+                <tr>
+                    <th >Title</th>
+                    <th >Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                <tr>
+                    <td>{{ task["title"]}}</td>
+                    <td>{{ task["description"] }}</td>
+                    <td>
+                        <a href="/edit/{{ task["id"] }}" class="btn btn-outline-info">Edit</a>
+                        <a href="/delete/{{ task["id"] }}" class="btn btn-outline-info">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}
+

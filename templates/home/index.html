@@ -1,0 +1,19 @@
+{% extends "layout/base.html" %}
+
+{% block content %} 
+    <h1>Welcome to the todo application</h1>
+    <p>Flask tutorial project</p>
+    <div>
+        <form action="/login" method="POST">
+            <input type="text" placeholder="Username" name="username">
+            <input type="password" name="password" id="" placeholder="Password">
+            <input type="submit" value="submit">
+        </form>
+    </div>
+    <p>{{ message }}</p>
+    <br>
+    <br>
+    <br>
+    <a href="/signup">Sign up here...</a>
+{% endblock %} 
+
