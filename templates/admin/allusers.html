@@ -1,0 +1,40 @@
+{% extends "layout/base.html" %}
+
+{% block content %} 
+<div class="container">
+    <br>
+    <br>
+    <br>
+    <table id="table_id" class="display" style="width: 100%; margin-left: auto; margin-right: auto;">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>Username</th>
+                <th>Email address</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in all_users %}
+            <tr>
+                <td>{{ user["id"] }}</td>
+                <td>{{ user["username"] }}</td>
+                <td>{{ user["email"] }}</td>
+                <td>
+                    <a href="" class="pure-button pure-button-primary">Edit</a>
+                    <a href="" class="button-error pure-button">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div>
+    <script>
+        $(document).ready( function () {
+        $('#table_id').DataTable();
+    } );
+    </script>
+</div>
+{% endblock %} 
+

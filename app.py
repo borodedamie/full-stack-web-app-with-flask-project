@@ -124,13 +124,21 @@ def get_admin_credentials():
     else:
         if request.form['username'] == 'admin' and request.form['password'] == '1234Pa55w0rd':
             
-            all_users = model.admin.get_all_users()
+            all_users = len(model.admin.get_all_users())
             all_tasks = model.admin.get_all_tasks()
             signups = model.admin.get_last_24hrs_users()
             result = model.admin.get_last_24hrs_tasks()     
             
             return render_template('admin/dashboard.html', all_users = all_users, all_tasks = all_tasks, signups = signups, result = result )
 
+@app.route("/allusers", methods = ['GET'])
+def get_all_users():
+    
+    all_users = model.admin.get_all_users()
+    
+    # return str(all_users)
+    
+    return render_template('admin/allusers.html', all_users = all_users )
 
 @app.route("/terms", methods = ['GET'])
 def get_terms_of_use():

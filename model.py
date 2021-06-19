@@ -153,16 +153,16 @@ class Admin:
     def get_all_users(self):
         
         connection = sqlite3.connect('todo_app.db', check_same_thread=False)
+        connection.row_factory = sqlite3.Row
         cursor = connection.cursor()
         cursor.execute(""" SELECT * FROM users ORDER BY id DESC; """)
         db_users = cursor.fetchall()
-        all_users = len(db_users)
 
         connection.commit()
         cursor.close()
         connection.close()
 
-        return all_users
+        return db_users
     
     def get_all_tasks(self):
         
@@ -204,7 +204,9 @@ class Admin:
         cursor.close()
         connection.close()
         
-        return result    
+        return result
+    
+        
     
     
 admin = Admin()

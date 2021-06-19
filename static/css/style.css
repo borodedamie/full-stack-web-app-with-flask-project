@@ -4,7 +4,7 @@ body {
     /* font-size: 22px; */
 }
 
-table {
+/* table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 75%;
@@ -16,11 +16,11 @@ table {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
-  }
-  
+  } */
+/*   
   tr:nth-child(even) {
     background-color: #dddddd;
-  }
+  } */
 
   .button-success,
   .button-error,
