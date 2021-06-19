@@ -1,11 +1,11 @@
 from flask import Flask, render_template, request, session, redirect, url_for, g, flash
-import usermodel, taskmodel
+import model
 import os
 
 app = Flask(__name__)
 
 username = ''
-user = usermodel.check_users()
+user = model.user.check_users()
 
 @app.route("/", methods = ['GET', 'POST'])
 def get_home():
@@ -24,7 +24,7 @@ def get_credentials():
        if request.method == 'POST':
         session.pop('username', None)
         is_user = request.form['username']
-        password = usermodel.check_password(is_user)
+        password = model.user.check_password(is_user)
         if request.form['password'] == password:
             session['username'] = request.form['username']
             return redirect(url_for('get_home')) 
@@ -49,7 +49,7 @@ def create_user():
         password = request.form['password']
         email = request.form['email']
 
-        message = usermodel.create_user(username, password, email)
+        message = model.user.create_user(username, password, email)
 
         return render_template("user/signup.html", message = message)
 
@@ -74,7 +74,7 @@ def create_todo():
         if 'username' in session:
             creator = session['username']
 
-        message = taskmodel.create_task(title, description, status, creator)
+        message = model.task.create_task(title, description, status, creator)
         return render_template('tasks.html', message = message)
     else:
         return render_template('tasks.html')
@@ -84,13 +84,13 @@ def create_todo():
 def retrieve_todo():
     if request.method == 'GET':
         creator = session['username']
-        tasks = taskmodel.retrieve_tasks(creator)
+        tasks = model.task.retrieve_tasks(creator)
         return render_template("alltask.html", tasks = tasks)
 
 @app.route("/edit/<int:id>", methods = ['GET'])
 def edit_todo(id):
     if request.method == 'GET':
-        task = taskmodel.edit_task(id)
+        task = model.task.edit_task(id)
         return render_template('task/edit.html', task = task)
     else:
         return 'No task found!'
@@ -103,7 +103,7 @@ def update_todo():
         description = request.form['description']
         status = 0
 
-        message = taskmodel.update_task(id, title, description, status)
+        message = model.task.update_task(id, title, description, status)
 
         return render_template('task/update.html', message = message )
     else:
@@ -112,9 +112,25 @@ def update_todo():
 @app.route("/delete/<int:id>", methods = ['GET', 'POST'])
 def delete_todo(id):
 
-    deleted = taskmodel.delete_task(id)
+    deleted = model.task.delete_task(id)
 
     return deleted
+
+#Admin
+@app.route("/admin", methods = ['GET', 'POST'])
+def get_admin_credentials():
+    if request.method == 'GET':
+        return render_template('admin/admin.html')
+    else:
+        if request.form['username'] == 'admin' and request.form['password'] == '1234Pa55w0rd':
+            
+            all_users = model.admin.get_all_users()
+            all_tasks = model.admin.get_all_tasks()
+            signups = model.admin.get_last_24hrs_users()
+            result = model.admin.get_last_24hrs_tasks()     
+            
+            return render_template('admin/dashboard.html', all_users = all_users, all_tasks = all_tasks, signups = signups, result = result )
+
 
 @app.route("/terms", methods = ['GET'])
 def get_terms_of_use():

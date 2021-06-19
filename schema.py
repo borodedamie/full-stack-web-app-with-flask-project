@@ -23,6 +23,14 @@ cursor.execute(
     ); """
 )
 
+cursor.execute(
+    """ CREATE TABLE administrators(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username VARCHAR(24),
+        password VARCHAR(32)
+    ); """
+)
+
 print("Tables created successfully")
 
 connection.commit()

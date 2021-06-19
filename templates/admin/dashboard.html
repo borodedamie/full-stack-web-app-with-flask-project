@@ -1,0 +1,20 @@
+{% extends "layout/base.html" %}
+
+{% block content %} 
+    <h1>Dashboard</h1> 
+    <ul class="stats-list">
+        <li>
+          {{ all_users }} <span class="stats-list-label"><a href="">Total users</a></span>
+        </li>
+        <li class="stats-list-positive">
+          {{ signups }} <span class="stats-list-label">Last 24 hrs signups</span>
+        </li>
+        <li class="stats-list-negative">
+          {{ all_tasks }} <span class="stats-list-label">Total tasks</span>
+        </li>
+        <li class="stats-list-build">
+          {{ result }} <span class="stats-list-label">Last 24 hrs tasks</span>
+        </li>
+      </ul>      
+{% endblock %} 
+

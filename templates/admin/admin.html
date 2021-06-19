@@ -1,0 +1,23 @@
+{% extends "layout/base.html" %}
+
+{% block content %} 
+    <h1>Admin Section</h1> 
+    <form class="pure-form pure-form-aligned" action="/admin" method="POST">
+        <fieldset>
+            <div class="pure-control-group">
+                <label for="aligned-name">Username</label>
+                <input type="text" id="aligned-name" placeholder="Username" name="username"/>
+                <!-- <span class="pure-form-message-inline">This is a required field.</span> -->
+            </div>
+            <div class="pure-control-group">
+                <label for="aligned-password">Password</label>
+                <input type="password" id="aligned-password" placeholder="Password"  name="password"/>
+            </div>
+            <div class="pure-controls">
+                <button type="submit" class="pure-button pure-button-primary">Sign in</button>
+            </div>
+        </fieldset>
+    </form>
+
+{% endblock %} 
+
