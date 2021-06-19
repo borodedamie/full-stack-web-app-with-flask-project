@@ -11,30 +11,28 @@
     <br>
     <br>
     <br>
-    <div id="task">
-       
-        <!-- <table BORDER="1" width=50% cellspacing="0" > -->
-        <table>
-            <thead>
-                <tr>
-                    <th >Title</th>
-                    <th >Description</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for task in tasks %}
-                <tr>
-                    <td>{{ task["title"]}}</td>
-                    <td>{{ task["description"] }}</td>
-                    <td>
-                        <a href="/edit/{{ task["id"] }}" class="btn btn-outline-info">Edit</a>
-                        <a href="/delete/{{ task["id"] }}" class="btn btn-outline-info">Delete</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+    <table class="pure-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr class="pure-table-odd">
+                <td>{{ task["id"] }}</td>
+                <td>{{ task["title"] }}</td>
+                <td>{{ task["description"] }}</td>
+                <td>
+                    <a href="/edit/{{ task["id"] }}" class="pure-button pure-button-primary">Edit</a>
+                    <a href="/delete/{{ task["id"] }}" class="button-error pure-button">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock content %}
 

@@ -3,15 +3,21 @@
 {% block content %}
     <h1>Edit todo</h1>
     <p>{{ message }}</p>
-    <div>
-
-        <form action="/update" method="POST">
-            <input type="text" placeholder="" name="title" value="{{ task.title }}">
-            <input type="text" name="description" id="" placeholder="" value="{{ task.description }}">
-            <button type="submit">Update</button>
-        </form>
-
-
-    </div>
+    <form class="pure-form pure-form-aligned" action="/update" method="POST">
+        <fieldset>
+            <div class="pure-control-group">
+                <label for="aligned-name">Title</label>
+                <input type="text" id="aligned-name" placeholder="" name="title" value="{{ task.title }}"/>
+            </div>
+            <div class="pure-control-group">
+                <label for="aligned-password">Description</label>
+                <input type="text" id="aligned-password" placeholder="" name="description" value="{{ task.description }}"/>
+            </div>
+            <div class="pure-controls">
+                <label for="aligned-cb" class="pure-checkbox">
+                <button type="submit" class="pure-button pure-button-primary">Update</button>
+            </div>
+        </fieldset>
+    </form>
 {% endblock content %}
 
