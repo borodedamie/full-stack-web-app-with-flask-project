@@ -21,8 +21,8 @@
                 <td>{{ user["username"] }}</td>
                 <td>{{ user["email"] }}</td>
                 <td>
-                    <a href="" class="pure-button pure-button-primary">Edit</a>
-                    <a href="" class="button-error pure-button">Delete</a>
+                    <a href="/editusers/{{ user["id"] }}" class="pure-button pure-button-primary">Edit</a>
+                    <a href="/deleteuser/{{ user[ "username" ] }}" class="button-error pure-button">Delete</a>
                 </td>
             </tr>
             {% endfor %}

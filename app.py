@@ -109,7 +109,7 @@ def update_todo():
     else:
         return 'unable to update database'
 
-@app.route("/delete/<int:id>", methods = ['GET', 'POST'])
+@app.route("/delete/<int:id>", methods = ['GET', 'POST', 'DELETE'])
 def delete_todo(id):
 
     deleted = model.task.delete_task(id)
@@ -134,11 +134,36 @@ def get_admin_credentials():
 @app.route("/allusers", methods = ['GET'])
 def get_all_users():
     
-    all_users = model.admin.get_all_users()
-    
-    # return str(all_users)
-    
+    all_users = model.admin.get_all_users()    
     return render_template('admin/allusers.html', all_users = all_users )
+
+@app.route("/editusers/<int:id>", methods = ['GET', 'POST'])
+def edit_user(id):
+    if request.method == 'GET':
+        user = model.admin.edit_user(id)
+    
+        return render_template('admin/edituser.html', user = user)
+    else:
+        return 'no user found'
+    
+@app.route("/updateuser", methods = ['GET', 'POST'])
+def update_user():
+    if request.method == 'POST':
+        id = request.form.get('id')
+        username = request.form['username']
+        email = request.form['email']
+
+        message = model.admin.update_user(id, username, email)
+
+        return render_template('admin/update.html', message = message )
+    else:
+        return 'unable to update database'
+    
+@app.route("/deleteuser/username", methods = [ 'GET', 'POST', 'DELETE' ])
+def delete_user(username):
+    deleted = model.admin.delete_user(username)
+
+    return deleted
 
 @app.route("/terms", methods = ['GET'])
 def get_terms_of_use():

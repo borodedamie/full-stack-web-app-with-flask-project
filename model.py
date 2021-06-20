@@ -19,7 +19,7 @@ class User:
         exist = cursor.fetchone()
 
         if exist is None:
-            cursor.execute(f""" INSERT INTO users(username, password, email) VALUES ('{self.username}', '{self.password}', '{self.email}'); """)
+            cursor.execute(f""" INSERT INTO users(username, password, email, reg_date) VALUES ('{self.username}', '{self.password}', '{self.email}', datetime('now', 'localtime')); """)
 
             connection.commit()
             cursor.close()
@@ -75,7 +75,7 @@ class Task:
         task_exist = cursor.fetchone()
 
         if task_exist is None:
-            cursor.execute(f""" INSERT INTO tasks(title, description, status, creator) VALUES ('{self.title}', '{self.description}', '{self.status}', '{self.creator}'); """)
+            cursor.execute(f""" INSERT INTO tasks(title, description, status, created_on, creator) VALUES ('{self.title}', '{self.description}', '{self.status}', datetime('now', 'localtime'), '{self.creator}'); """)
 
             connection.commit()
             cursor.close()
@@ -182,7 +182,7 @@ class Admin:
         
         connection = sqlite3.connect('todo_app.db', check_same_thread=False)
         cursor = connection.cursor()
-        cursor.execute("""SELECT * FROM users WHERE "when" >= date('now', '-1 days') AND "when" < date('now'); """)
+        cursor.execute("""SELECT username FROM users WHERE reg_date > datetime('now', 'localtime', '-1 day') ORDER BY reg_date DESC; """)
         one_day_old_users = cursor.fetchall()
         signups = len(one_day_old_users)
         
@@ -196,7 +196,7 @@ class Admin:
         
         connection = sqlite3.connect('todo_app.db', check_same_thread=False)
         cursor = connection.cursor()
-        cursor.execute("""SELECT * FROM tasks WHERE "when" >= date('now', '-1 days') AND "when" < date('now'); """)
+        cursor.execute("""SELECT * FROM tasks WHERE created_on > datetime('now', 'localtime', '-1 day') ORDER BY created_on DESC; """)
         one_day_old_tasks = cursor.fetchall()
         result = len(one_day_old_tasks)
         
@@ -206,7 +206,50 @@ class Admin:
         
         return result
     
+    def edit_user(self, id):
         
+        self.id = id
+        
+        connection = sqlite3.connect('todo_app.db', check_same_thread=False)
+        connection.row_factory = sqlite3.Row
+        cursor = connection.cursor()
+        cursor.execute(f""" SELECT username, email FROM users WHERE id = '{self.id}'; """)
+        user = cursor.fetchone()
+
+        connection.commit()
+        cursor.close()
+        connection.close()
+
+        return user
+    
+    def update_user(self, id, username, email):
+        
+        self.id = id
+        self.username = username
+        self.email = email
+        
+        connection = sqlite3.connect('todo_app.db', check_same_thread=False)
+        cursor = connection.cursor()    
+        cursor.execute(f""" UPDATE users SET username = '{self.username}', email = '{self.email}' WHERE id = '{self.id}'; """ )
+
+        connection.commit()
+        cursor.close()
+        connection.close()
+        
+    def delete_user(self, username):
+        
+        self.username = username
+        
+        connection = sqlite3.connect('todo_app.db', check_same_thread=False)
+        cursor = connection.cursor()
+        cursor.execute(f""" DELETE FROM users WHERE username = '{self.username}'; """)
+        cursor.execute(f""" DELETE FROM tasks WHERE creator = '{self.username}'; """)
+
+        connection.commit()
+        cursor.close()
+        connection.close()
+
+        return 'User deleted, successfully!'
     
     
 admin = Admin()

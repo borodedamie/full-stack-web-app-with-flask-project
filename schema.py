@@ -8,7 +8,8 @@ cursor.execute(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         username VARCHAR(24),
         password VARCHAR(32),
-        email VARCHAR(55)
+        email VARCHAR(55),
+        reg_date VARCHAR(32)
     ); """
 )
 
@@ -19,6 +20,7 @@ cursor.execute(
         description VARCHAR(255),
         status DEFAULT 0,
         creator VARCHAR(24),
+        created_on VARCHAR(24),
         FOREIGN KEY(creator) REFERENCES users(username)
     ); """
 )
