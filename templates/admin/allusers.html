@@ -22,7 +22,7 @@
                 <td>{{ user["email"] }}</td>
                 <td>
                     <a href="/editusers/{{ user["id"] }}" class="pure-button pure-button-primary">Edit</a>
-                    <a href="/deleteuser/{{ user[ "username" ] }}" class="button-error pure-button">Delete</a>
+                    <a href="deleteuser/{{ user[ "username" ] }}" class="button-error pure-button">Delete</a>
                 </td>
             </tr>
             {% endfor %}

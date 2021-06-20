@@ -159,8 +159,9 @@ def update_user():
     else:
         return 'unable to update database'
     
-@app.route("/deleteuser/username", methods = [ 'GET', 'POST', 'DELETE' ])
+@app.route("/deleteuser/<username>", methods = [ 'GET', 'POST', 'DELETE' ])
 def delete_user(username):
+    
     deleted = model.admin.delete_user(username)
 
     return deleted

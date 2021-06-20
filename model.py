@@ -15,7 +15,7 @@ class User:
         
         connection = sqlite3.connect('todo_app.db', check_same_thread=False)
         cursor = connection.cursor()
-        cursor.execute(f""" SELECT password FROM users WHERE Username = '{self.username}'; """)
+        cursor.execute(f""" SELECT password FROM users WHERE username = '{self.username}'; """)
         exist = cursor.fetchone()
 
         if exist is None:
