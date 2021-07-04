@@ -4,15 +4,15 @@
     <div style="text-align: center;font-size: 30px;color:#af6920;">
         <p>Todo List</p>
     </div>
-    <div>
+    <div style="font-size:large ;">
         <a href="/create">Create to do...</a>
     </div>
     <br>
     <br>
     <br>
     <br>
-    <table class="pure-table">
-        <thead>
+    <table class="" id="task_table">
+        <thead style="border: black;">
             <tr>
                 <th>#</th>
                 <th>Title</th>
@@ -34,5 +34,14 @@
             {% endfor %}
         </tbody>
     </table>
+    <div>
+        <script>
+            $(document).ready( function () {
+            $('#task_table').DataTable();
+        } );
+        </script>
+    </div>
+
+    
 {% endblock content %}
 

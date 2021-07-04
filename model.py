@@ -117,16 +117,15 @@ class Task:
 
         return task
 
-    def update_task(self, id, title, description, status):
-        
-        self.id = id
+    def update_task(self, title, description, status):
+
         self.title = title
         self.description = description
         self.status = status
         
         connection = sqlite3.connect('todo_app.db', check_same_thread=False)
         cursor = connection.cursor()    
-        cursor.execute(f""" UPDATE tasks SET title = '{self.title}', description = '{self.description}', status = '{self.status}' WHERE id = '{self.id}'; """ )
+        cursor.execute(f""" UPDATE tasks SET title = '{self.title}', description = '{self.description}', status = '{self.status}' WHERE title LIKE '{self.title}'; """ )
 
         connection.commit()
         cursor.close()

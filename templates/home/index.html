@@ -1,26 +1,42 @@
-{% extends "layout/base.html" %}
+{% extends "layout/frontpage.html" %}
 
 {% block content %} 
-    <h1>Welcome to the todo application</h1> 
-    <form class="pure-form pure-form-aligned" action="/login" method="POST">
-        <fieldset>
-            <div class="pure-control-group">
-                <label for="aligned-name">Username</label>
-                <input type="text" id="aligned-name" placeholder="Username" name="username"/>
-                <!-- <span class="pure-form-message-inline">This is a required field.</span> -->
-            </div>
-            <div class="pure-control-group">
-                <label for="aligned-password">Password</label>
-                <input type="password" id="aligned-password" placeholder="Password"  name="password"/>
-            </div>
-            <div class="pure-controls">
-                <label for="aligned-cb" class="pure-checkbox">
-                    <input type="checkbox" id="default-remember" /> Remember me</label>
-                <button type="submit" class="pure-button pure-button-primary">Sign in</button>
-                <a href="/signup" class="pure-button pure-button-primary">Sign up</a>
-            </div>
-        </fieldset>
-    </form>
+  
+      <div>
+        <div class="bg-light p-5 rounded">
+          <div class="col-sm-8 mx-auto">
+            <form action="/login" method="POST">
+              <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+              <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+              <div class="form-floating" style="width: auto;">
+                <input type="text" class="form-control" id="floatingInput" placeholder="" name="username">
+                <label for="floatingInput">Username</label>
+              </div>
+              <div class="form-floating" style="width: auto;">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="" name="password">
+                <label for="floatingPassword">Password</label>
+              </div>
+              <br>
+              <br>
+              <div class="checkbox mb-3">
+                <label>
+                  <input type="checkbox" value="remember-me"> Remember me
+                </label>
+              </div>
+                <button class="btn btn-success" type="submit">Sign in</button>
+                <a href="/signup" class="btn btn-primary">Sign up</a>
+              <div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  <!-- </main> -->
+  
+  
+      <script src="/static/js/bootstrap.bundle.min.js"></script>
 
 {% endblock %} 
 

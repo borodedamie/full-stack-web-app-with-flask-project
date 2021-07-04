@@ -1,15 +1,37 @@
 {% extends "layout/base.html" %} 
 
 {% block content %} 
-    <div>
+    <!-- <div>
         <p>Create Todo</p>
     </div>
-    <div id="task">
-        <form action="/create" method="POST">
-            <input type="text" placeholder="Title" name="title">
-            <input type="text" name="description" id="" placeholder="Description">
-            <input type="submit" value="submit">
-        </form>
-    </div>
+    <form class="pure-form pure-form-aligned" action="/create" method="POST">
+        <fieldset>
+            <div class="pure-control-group">
+                <label for="aligned-name">Title</label>
+                <input type="text" id="aligned-name" placeholder="Title" name="title"/>
+                <span class="pure-form-message-inline">This is a required field.</span>
+            </div>
+            <div class="pure-control-group">
+                <label for="aligned-password">Description</label>
+                <input type="text" id="aligned-name" placeholder="Description" name="description"/>
+            </div>
+            <div class="pure-controls">
+                <label for="aligned-cb" class="pure-checkbox">
+                <button type="submit" class="pure-button pure-button-primary">Submit</button>
+            </div>
+        </fieldset>
+    </form> -->
+
+    <h3>Create Todo</h3>
+    <form action="" method="POST" name="myform">
+        {{ form.csrf_token }}
+
+        {{ form.title.label }} {{ form.title(size=20) }}
+        {{ form.description.label }} {{ form.description(size=50) }}
+        {{ form.start.label }} {{ form.start(class='datepicker') }} {{ form.hidden_tag() }}
+        {{ form.end.label }} {{ form.end(class='datepicker') }} {{ form.hidden_tag() }}
+
+        {{ form.submit() }}
+    </form>
 {% endblock content %}
 

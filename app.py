@@ -1,4 +1,8 @@
 from flask import Flask, render_template, request, session, redirect, url_for, g, flash
+from flask_wtf import FlaskForm
+from wtforms.fields.html5 import DateField
+from wtforms.validators import DataRequired
+from wtforms import validators, SubmitField, StringField, TextAreaField
 import model
 import os
 
@@ -7,13 +11,20 @@ app = Flask(__name__)
 username = ''
 user = model.user.check_users()
 
+class InfoForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    description = TextAreaField('Description', validators=[DataRequired()])
+    start = DateField('Start', format='%Y-%m-$d', validators=[DataRequired()])
+    end = DateField('End', format='%Y-%m-$d', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
 @app.route("/", methods = ['GET', 'POST'])
 def get_home():
 
     if 'username' in session:
         g.user = session['username']
         flash('You have signed up, successfully!!!')
-        return redirect(url_for('retrieve_todo'))
+        return redirect(url_for('get_userpage'))
     else:
         return render_template('home/index.html')
 
@@ -22,16 +33,20 @@ def get_home():
 def get_credentials():
     try:
        if request.method == 'POST':
-        session.pop('username', None)
-        is_user = request.form['username']
-        password = model.user.check_password(is_user)
-        if request.form['password'] == password:
-            session['username'] = request.form['username']
-            return redirect(url_for('get_home')) 
+           session.pop('username', None)
+           is_user = request.form['username']
+           password = model.user.check_password(is_user)
+           if request.form['password'] == password:
+               session['username'] = request.form['username']
+               return redirect(url_for('get_home')) 
     except:
         return 'User does not exist'
     else:
         return render_template('home/index.html')
+    
+@app.route("/profile")
+def get_userpage():
+    return render_template('user/userpage.html')
 
 @app.before_request
 def before_request():
@@ -42,8 +57,7 @@ def before_request():
 @app.route("/signup", methods = ['GET', 'POST'])
 def create_user():
     if request.method == 'GET':
-        message = 'Please sign up!'
-        return render_template('user/signup.html', message = message)
+        return render_template('user/signup.html')
     else:
         username = request.form['username']
         password = request.form['password']
@@ -67,17 +81,20 @@ def logout():
 #CRUD routes
 @app.route("/create", methods = ['GET', 'POST'])
 def create_todo():
-    if request.method == 'POST':
-        title = request.form['title']
-        description = request.form['description']
-        status = 0
-        if 'username' in session:
-            creator = session['username']
+    # if request.method == 'POST':
+    #     title = request.form['title']
+    #     description = request.form['description']
+    #     status = 0
+    #     if 'username' in session:
+    #         creator = session['username']
 
-        message = model.task.create_task(title, description, status, creator)
-        return render_template('tasks.html', message = message)
-    else:
-        return render_template('tasks.html')
+    #     message = model.task.create_task(title, description, status, creator)
+    #     return render_template('tasks.html', message = message)
+    # else:
+    #     return render_template('tasks.html')
+    
+    form = InfoForm()        
+    return render_template('tasks.html', form = form)
 
 
 @app.route("/retrieve", methods = ['GET'])
@@ -98,12 +115,11 @@ def edit_todo(id):
 @app.route("/update", methods = ['GET', 'POST'])
 def update_todo():
     if request.method == 'POST':
-        id = request.form.get('id')
         title = request.form['title']
         description = request.form['description']
         status = 0
 
-        message = model.task.update_task(id, title, description, status)
+        message = model.task.update_task(title, description, status)
 
         return render_template('task/update.html', message = message )
     else:
@@ -166,6 +182,10 @@ def delete_user(username):
 
     return deleted
 
+@app.route("/calendar")
+def get_calendar():
+    return render_template('calendar/calendar.html')
+
 @app.route("/terms", methods = ['GET'])
 def get_terms_of_use():
     return render_template('home/terms.html')
@@ -178,7 +198,18 @@ def get_privacy():
 def get_about():
     return render_template('home/about.html')
 
+@app.route("/changes")
+def get_changes():
+    if request.method == 'GET':
+        creator = session['username']
+        tasks = model.task.retrieve_tasks(creator)
+        return render_template("changes.html", tasks = tasks)
+
+@app.route("/sidebar")
+def get_sidebar():
+    return render_template("sidebar.html")
+
 if __name__ == "__main__":
     app.secret_key = os.urandom(12)
-    app.run(debug = True)
+    app.run(host='0.0.0.0', port=8000, debug = True)
 

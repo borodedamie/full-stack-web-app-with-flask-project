@@ -1,0 +1,35 @@
+{% extends "layout/base.html" %} 
+
+{% block content %} 
+    <div id='calendar'></div>
+        
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+            },
+            initialDate: new Date(),
+            navLinks: true,
+            businessHours: true,
+            editable: true,
+            selectable: true,
+            events : [
+                {
+                    title : 'Meeting',
+                    start : '2021-06-29T13:00:00',
+                    end: '2021-06-30',
+                    color: 'red'
+                }
+            ]
+        });
+        calendar.render();
+        });
+
+    </script>
+{% endblock content %}
+

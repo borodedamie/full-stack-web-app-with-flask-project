@@ -1,14 +1,14 @@
-{% extends "layout/base.html" %}
+{% extends "layout/frontpage.html" %}
 
 {% block content %}
-    <h1>Sign up page</h1>
+    
     <p>{{ message }}</p>
-    <form class="pure-form pure-form-aligned" action="/signup" method="POST">
+    <!-- <form class="pure-form pure-form-aligned" action="/signup" method="POST">
         <fieldset>
             <div class="pure-control-group">
                 <label for="aligned-name">Username</label>
                 <input type="text" id="aligned-name" placeholder="Username" name="username"/>
-                <!-- <span class="pure-form-message-inline">This is a required field.</span> -->
+                 <span class="pure-form-message-inline">This is a required field.</span>
             </div>
             <div class="pure-control-group">
                 <label for="aligned-password">Password</label>
@@ -25,7 +25,48 @@
                 <a href="/login" class="pure-button pure-button-primary">Login</a>
             </div>
         </fieldset>
-    </form>
+    </form> -->
+
+    <div>
+    <div class="bg-light p-5 rounded">
+    <div class="col-sm-8 mx-auto">
+
+    <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
+
+    <br>
+    
+    
+    <form action="/signup" method="POST">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="floatingInput" placeholder="" name="username">
+          <label for="floatingInput">Username</label>
+        </div>
+        <div class="form-floating">
+          <input type="password" class="form-control" id="floatingPassword" placeholder="" name="password">
+          <label for="floatingPassword">Password</label>
+        </div>
+        <div class="form-floating">
+            <input type="email" class="form-control" id="floatingPassword" placeholder="" name="email">
+            <label for="floatingPassword">Email Address</label>
+          </div>
+        <br>
+        <br>
+        <div class="checkbox mb-3">
+          <label>
+            <input type="checkbox" id="" /> I&#x27;ve read the terms and conditions
+          </label>
+        </div>
+            <button type="submit" class="btn btn-success">Submit</button>
+            <a href="/login" class="btn btn-primary">Login</a>
+        <div>
+        </div>
+      </form>
+    </div>
+    </div>
+    </div>
+
+      <script src="/static/js/bootstrap.bundle.min.js"></script>
+
 
 {% endblock content %}
 
