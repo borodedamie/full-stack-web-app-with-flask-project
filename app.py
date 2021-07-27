@@ -11,7 +11,7 @@ app = Flask(__name__)
 username = ''
 user = model.user.check_users()
 
-class InfoForm(FlaskForm):
+class TaskForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired()])
     start = DateField('Start', format='%Y-%m-$d', validators=[DataRequired()])
@@ -93,8 +93,19 @@ def create_todo():
     # else:
     #     return render_template('tasks.html')
     
-    form = InfoForm()        
-    return render_template('tasks.html', form = form)
+    form = TaskForm()
+    
+    if request.method == 'POST':
+        if form.validate() == False:
+            title = request.form['title']
+            description = request.form['description']
+            start = request.form['start']
+            end = request.form['end']
+            status  = 0 
+            if 'username' in session:
+                creator = session['username']
+            message = model.task.create_task(title, description, status, creator, start, end)       
+            return message
 
 
 @app.route("/retrieve", methods = ['GET'])
@@ -201,10 +212,11 @@ def get_about():
 @app.route("/changes")
 def get_changes():
     if request.method == 'GET':
+        form = TaskForm()
         creator = session['username']
-        tasks = model.task.retrieve_tasks(creator)
-        return render_template("changes.html", tasks = tasks)
-
+        tasks = model.task.retrieve_tasks(creator)    
+        return render_template("changes.html", tasks = tasks, form = form)
+        
 @app.route("/sidebar")
 def get_sidebar():
     return render_template("sidebar.html")

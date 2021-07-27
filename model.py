@@ -62,12 +62,14 @@ user = User()
 
 class Task:
     
-    def create_task(self, title, description, status, creator):
+    def create_task(self, title, description, status, creator, start, end):
         
         self.title = title
         self.description = description
         self.status = status 
         self.creator = creator
+        self.start = start
+        self.end = end
         
         connection = sqlite3.connect('todo_app.db', check_same_thread=False)
         cursor = connection.cursor()
@@ -75,7 +77,7 @@ class Task:
         task_exist = cursor.fetchone()
 
         if task_exist is None:
-            cursor.execute(f""" INSERT INTO tasks(title, description, status, created_on, creator) VALUES ('{self.title}', '{self.description}', '{self.status}', datetime('now', 'localtime'), '{self.creator}'); """)
+            cursor.execute(f""" INSERT INTO tasks(title, description, status, created_on, creator, start_date, end_date) VALUES ('{self.title}', '{self.description}', '{self.status}', datetime('now', 'localtime'), '{self.creator}', '{self.start}', '{self.end}'); """)
 
             connection.commit()
             cursor.close()

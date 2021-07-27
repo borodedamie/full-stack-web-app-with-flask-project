@@ -20,16 +20,16 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="nav navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home</a>
+                    <a class="nav-link" href="/profile">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
+                    <a class="nav-link" href="/changes">Tasks</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Portfolio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
+                    <a class="nav-link" href="/logout">Logout</a>
                 </li>
               </ul>
             </div>
@@ -43,7 +43,19 @@
           </p>
           <div class="collapse" id="collapseExample">
             <div class="card card-body">
-                <form>
+              <div class="mb-3">
+                <form action="/create" method="POST" name="myform">
+                  {{ form.csrf_token }}
+          
+                  {{ form.title.label }} {{ form.title(size=20) }}
+                  {{ form.description.label }} {{ form.description(size=255) }}
+                  {{ form.start.label }} {{ form.start(class='datepicker') }} {{ form.hidden_tag() }}
+                  {{ form.end.label }} {{ form.end(class='datepicker') }} {{ form.hidden_tag() }}
+          
+                  {{ form.submit() }}
+              </form>
+              </div>
+                <!-- <form>
                 <div class="mb-3">
                   <label for="exampleInputEmail1" class="form-label">Title</label>
                   <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -53,26 +65,33 @@
                   <input type="text" class="form-control" id="exampleInputPassword1">
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
-              </form>
+              </form> -->
             </div>
         </div>
 
       <!-- remember to add header -->
 
       {% for task in tasks %}
-        <div class="accordion accordion-flush" id="accordionFlushExample">
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="flush-headingOne">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                  {{ task["title"]}} #{{ task["id"] }}
-                </button>
-              </h2>
-              <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                <div class="accordion-body">{{ task["description"] }}</div>
-              </div>
-            </div>
+      <li class="list-group list-group-numbered">
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+          <div class="ms-2 me-auto">
+            <div class="fw-bold">{{ task["title"] }}</div>
+            {{ task["description"] }}
           </div>
+          <div>
+            <span class="badge bg-primary rounded-pill">14 days ago</span>
+            <span><a href="http://"><i class="bi bi-pencil-square"></i></a></span>
+            <span><a href="http://"><i class="bi bi-trash"></i></a></span>
+          </div>
+        </li>
+      </li>
       {% endfor %}
+
+      <!-- <ul class="list-group">
+        <li class="list-group-item">
+          in
+        </li>
+      </ul> -->
 
 
         <!-- <nav aria-label="breadcrumb">

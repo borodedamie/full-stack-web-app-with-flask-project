@@ -21,6 +21,8 @@ cursor.execute(
         status DEFAULT 0,
         creator VARCHAR(24),
         created_on VARCHAR(24),
+        start_date DATE,
+        end_date DATE,
         FOREIGN KEY(creator) REFERENCES users(username)
     ); """
 )
