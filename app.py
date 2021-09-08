@@ -112,7 +112,7 @@ def create_todo():
 def retrieve_todo():
     if request.method == 'GET':
         creator = session['username']
-        tasks = model.task.retrieve_tasks(creator)
+        tasks = model.task.retrieve_tasks()
         return render_template("alltask.html", tasks = tasks)
 
 @app.route("/edit/<int:id>", methods = ['GET'])
@@ -130,7 +130,7 @@ def update_todo():
         description = request.form['description']
         status = 0
 
-        message = model.task.update_task(title, description, status)
+        message = model.task.update_task()
 
         return render_template('task/update.html', message = message )
     else:
@@ -167,7 +167,7 @@ def get_all_users():
 @app.route("/editusers/<int:id>", methods = ['GET', 'POST'])
 def edit_user(id):
     if request.method == 'GET':
-        user = model.admin.edit_user(id)
+        user = model.admin.edit_user()
     
         return render_template('admin/edituser.html', user = user)
     else:
@@ -180,13 +180,13 @@ def update_user():
         username = request.form['username']
         email = request.form['email']
 
-        message = model.admin.update_user(id, username, email)
+        message = model.admin.update_user()
 
         return render_template('admin/update.html', message = message )
     else:
         return 'unable to update database'
     
-@app.route("/deleteuser/<username>", methods = [ 'GET', 'POST', 'DELETE' ])
+@app.route("/deleteuser/<string:username>", methods = [ 'GET', 'POST', 'DELETE' ])
 def delete_user(username):
     
     deleted = model.admin.delete_user(username)
