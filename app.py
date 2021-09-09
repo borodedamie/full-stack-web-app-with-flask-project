@@ -97,10 +97,10 @@ def create_todo():
     
     if request.method == 'POST':
         if form.validate() == False:
-            title = request.form['title']
-            description = request.form['description']
-            start = request.form['start']
-            end = request.form['end']
+            title = request.form.get('title')
+            description = request.form.get('description')
+            start = request.form.get('start')
+            end = request.form.get('end')
             status  = 0 
             if 'username' in session:
                 creator = session['username']
@@ -110,10 +110,12 @@ def create_todo():
 
 @app.route("/retrieve", methods = ['GET'])
 def retrieve_todo():
-    if request.method == 'GET':
+    if 'username' in session:
         creator = session['username']
-        tasks = model.task.retrieve_tasks()
-        return render_template("alltask.html", tasks = tasks)
+    
+        if request.method == 'GET':
+            tasks = model.task.retrieve_tasks()
+            return render_template("alltask.html", tasks = tasks)
 
 @app.route("/edit/<int:id>", methods = ['GET'])
 def edit_todo(id):
@@ -126,8 +128,8 @@ def edit_todo(id):
 @app.route("/update", methods = ['GET', 'POST'])
 def update_todo():
     if request.method == 'POST':
-        title = request.form['title']
-        description = request.form['description']
+        title = request.form.get('title')
+        description = request.form.get('description')
         status = 0
 
         message = model.task.update_task()

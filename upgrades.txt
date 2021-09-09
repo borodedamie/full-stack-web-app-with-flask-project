@@ -1,0 +1,5 @@
+calendar
+accordion
+sidebar
+datepicker
+datatable (admin section)
